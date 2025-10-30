@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Phim - Đặt Vé</title>
+    
+    <style>
+        /* Thiết lập chung */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header & Footer (Giả định)
+           Trong dự án thật, bạn sẽ dùng chung header/footer với Trang Chủ.
+           Ở đây tôi chỉ tạo 1 header đơn giản để demo.
+        */
+        .main-header {
+            background-color: #1a1a1a;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e50914;
+            text-decoration: none;
+        }
+
+        .main-nav a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        
+        .main-footer {
+            background-color: #1a1a1a;
+            color: #888;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+        }
+
+        /* 1. Phần Thông Tin Phim (Movie Detail Hero) */
+        .movie-hero {
+            padding: 40px 0;
+        }
+
+        .movie-hero-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .movie-poster {
+            flex-basis: 300px;
+            flex-shrink: 0; /* Không co lại */
+        }
+
+        .movie-poster img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .movie-details {
+            flex-grow: 1; /* Lấp đầy phần còn lại */
+        }
+
+        .movie-details h1 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .movie-details .tag {
+            background-color: #e50914;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .movie-specs {
+            margin: 15px 0;
+            display: flex;
+            gap: 20px;
+            color: #aaa;
+        }
+
+        .movie-description {
+            margin-bottom: 20px;
+        }
+        
+        .trailer-btn {
+            background-color: #e50914;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .trailer-btn:hover {
+            background-color: #c40812;
+        }
+
+        /* 2. Phần Đặt Vé (Booking Widget) */
+        .booking-section {
+            background-color: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        .booking-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #e50914;
+        }
+
+        /* Bộ lọc Rạp / Ngày */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: none;
+            color: #888;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        .filter-btn.active {
+            color: #ffffff;
+            border-bottom-color: #e50914;
+        }
+
+        /* Danh sách rạp / suất chiếu */
+        .cinema-list {
+            /* Ẩn các list không active */
+        }
+
+        .cinema-list.hidden {
+            display: none;
+        }
+
+        .cinema-item {
+            background-color: #222;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .cinema-item h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .cinema-item p {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .showtime-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .showtime-btn {
+            background-color: #444;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .showtime-btn:hover {
+            background-color: #e50914;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">LOGO-PHIM</a>
+            <nav class="main-nav">
+                <a href="index.html">Trang Chủ</a>
+                <a href="#">Đăng Nhập</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="movie-hero">
+            <div class="container movie-hero-container">
+                <div class="movie-poster">
+                    <img src="https://via.placeholder.com/300x450.png?text=Poster+Phim" alt="Poster Lật Mặt 7">
+                </div>
+                
+                <div class="movie-details">
+                    <h1>LẬT MẶT 7: MỘT ĐIỀU ƯỚC</h1>
+                    <span class="tag">C13</span> <div class="movie-specs">
+                        <span>Thể loại: <strong>Hành động, Gia đình</strong></span>
+                        <span>Thời lượng: <strong>120 phút</strong></span>
+                        <span>Khởi chiếu: <strong>26/04/2025</strong></span>
+                    </div>
+
+                    <p class="movie-description">
+                        Đây là phần mô tả tóm tắt nội dung của bộ phim. Nội dung này sẽ được lấy từ cơ sở dữ liệu. Phim kể về một câu chuyện...
+                    </p>
+                    
+                    <button class="trailer-btn">XEM TRAILER</button>
+                    </div>
+            </div>
+        </section>
+
+        <section class="booking-section container">
+            <h2>Mua Vé Theo Suất Chiếu</h2>
+
+            <div class="filter-tabs" id="cinema-tabs">
+                <button class="filter-btn active" data-target="#cinema-1">CGV Hùng Vương</button>
+                <button class="filter-btn" data-target="#cinema-2">BHD Bitexco</button>
+                </div>
+
+            <div class="filter-tabs" id="date-tabs">
+                <button class="filter-btn active" data-target="#date-1">Hôm nay, 30/10</button>
+                <button class="filter-btn" data-target="#date-2">Ngày mai, 31/10</button>
+                <button class="filter-btn" data-target="#date-3">Thứ Bảy, 01/11</button>
+            </div>
+
+            <div id="showtime-lists">
+                <div class="cinema-list" id="cinema-1-date-1">
+                    <div class="cinema-item">
+                        <h3>CGV Hùng Vương</h3>
+                        <p>Lầu 7, 126 Hùng Vương, P.12, Q.5, TP.HCM</p>
+                        <div class="showtime-grid">
+                            <a href="seat-selection.html" class="showtime-btn">14:30</a>
+                            <a href="seat-selection.html" class="showtime-btn">17:00</a>
+                            <a href="seat-selection.html" class="showtime-btn">19:45</a>
+                            <a href="seat-selection.html" class="showtime-btn">21:15</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cinema-list hidden" id="cinema-1-date-2">
+                    <div class="cinema-item">
+                        <h3>CGV Hùng Vương</h3>
+                        <p>Lầu 7, 126 Hùng Vương, P.12, Q.5, TP.HCM</p>
+                        <div class="showtime-grid">
+                            <a href="seat-selection.html" class="showtime-btn">15:00</a>
+                            <a href="seat-selection.html" class="showtime-btn">18:00</a>
+                            <a href="seat-selection.html" class="showtime-btn">20:45</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cinema-list hidden" id="cinema-2-date-1">
+                    <div class="cinema-item">
+                        <h3>BHD Bitexco</h3>
+                        <p>Lầu 3, TTTM Bitexco, 2 Hải Triều, Q.1, TP.HCM</p>
+                        <div class="showtime-grid">
+                            <a href="seat-selection.html" class="showtime-btn">16:00</a>
+                            <a href="seat-selection.html" class="showtime-btn">18:30</a>
+                            <a href="seat-selection.html" class="showtime-btn">20:00</a>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 Đồ Án PTTK Hướng Đối Tượng.</p>
+    </footer>
+
+    <script>
+        // JAVASCRIPT XỬ LÝ TAB RẠP VÀ NGÀY
+
+        const cinemaTabs = document.getElementById('cinema-tabs');
+        const dateTabs = document.getElementById('date-tabs');
+        const showtimeListsContainer = document.getElementById('showtime-lists');
+
+        // Hàm chung để xử lý logic tab
+        function handleTabClick(tabContainer, event) {
+            // Chỉ xử lý khi nhấn vào nút .filter-btn
+            if (!event.target.classList.contains('filter-btn')) {
+                return;
+            }
+
+            // 1. Bỏ active ở tất cả các nút trong container đó
+            tabContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 2. Thêm active cho nút vừa nhấn
+            event.target.classList.add('active');
+
+            // 3. Cập nhật danh sách suất chiếu
+            updateShowtimeList();
+        }
+        
+        // Gắn sự kiện cho 2 container tab
+        cinemaTabs.addEventListener('click', (e) => handleTabClick(cinemaTabs, e));
+        dateTabs.addEventListener('click', (e) => handleTabClick(dateTabs, e));
+
+        // Hàm cập nhật hiển thị suất chiếu
+        function updateShowtimeList() {
+            // 1. Lấy ra tab rạp đang active
+            const activeCinemaButton = cinemaTabs.querySelector('.filter-btn.active');
+            const cinemaTargetId = activeCinemaButton.dataset.target.replace('#', ''); // vd: "cinema-1"
+            
+            // 2. Lấy ra tab ngày đang active
+            const activeDateButton = dateTabs.querySelector('.filter-btn.active');
+            const dateTargetId = activeDateButton.dataset.target.replace('#', ''); // vd: "date-1"
+
+            // 3. Xây dựng ID của list suất chiếu cần hiển thị
+            const targetListId = `${cinemaTargetId}-${dateTargetId}`; // vd: "cinema-1-date-1"
+
+            // 4. Ẩn tất cả các list suất chiếu
+            showtimeListsContainer.querySelectorAll('.cinema-list').forEach(list => {
+                list.classList.add('hidden');
+            });
+
+            // 5. Hiển thị list suất chiếu đúng
+            const targetList = document.getElementById(targetListId);
+            if (targetList) {
+                targetList.classList.remove('hidden');
+            }
+        }
+
+        // Chạy lần đầu khi tải trang để đảm bảo list đầu tiên được hiển thị
+        updateShowtimeList();
+    </script>
+
+</body>
+</html>
