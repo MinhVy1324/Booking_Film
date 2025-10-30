@@ -176,7 +176,7 @@
 <body>
 
     <header class="simple-header">
-        <a href="index.html" class="logo">LOGO-PHIM</a>
+        <a href="index.php" class="logo">LOGO-PHIM</a>
     </header>
 
     <main class="main-content">
@@ -224,7 +224,7 @@
                 </div>
             </div>
 
-            <a href="index.html" class="home-btn">Quay về Trang Chủ</a>
+            <a href="index.php" class="home-btn">Quay về Trang Chủ</a>
         </div>
 
     </main>

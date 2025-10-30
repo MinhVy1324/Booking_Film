@@ -233,7 +233,7 @@
 <body>
 
     <header class="simple-header">
-        <a href="index.html" class="logo">LOGO-PHIM</a>
+        <a href="index.php" class="logo">LOGO-PHIM</a>
     </header>
 
     <main class="main-content">
@@ -329,7 +329,7 @@
                 <div>Ghế đã chọn: <span id="selected-seats-list">Chưa chọn</span></div>
                 <div>Tổng cộng: <span id="total-price">0 VNĐ</span></div>
             </div>
-            <a href="checkout.html" class="checkout-btn">Tiếp Tục</a>
+            <a href="/USER/checkout.php" class="checkout-btn">Tiếp Tục</a>
         </div>
         
     </main>

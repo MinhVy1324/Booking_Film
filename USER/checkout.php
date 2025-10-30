@@ -195,7 +195,7 @@
 <body>
 
     <header class="simple-header">
-        <a href="index.html" class="logo">LOGO-PHIM</a>
+        <a href="index.php" class="logo">LOGO-PHIM</a>
     </header>
 
     <div class="container">
@@ -320,7 +320,7 @@
         
         // Logic cho nút Thanh Toán
         const confirmBtn = document.getElementById('confirm-payment-btn');
-        confirmBtn.addEventListener('click', () => {
+        confirmBtn.addEventListener('click', async () => {
             // Khi nhấn nút này, bạn sẽ:
             // 1. Thu thập dữ liệu (email, phone, phương thức thanh toán).
             // 2. Gửi toàn bộ thông tin đơn hàng (từ trang trước) và thông tin thanh toán
@@ -328,11 +328,11 @@
             // 3. Backend xử lý, nếu thành công thì chuyển hướng người dùng
             //    sang trang "Thành Công" (hiển thị mã QR vé).
             
-            alert('Đang giả lập thanh toán thành công... Nhấn OK để xem vé.');
-            // Trong đồ án, bạn sẽ điều hướng đến trang "booking-success.html"
-            // window.location.href = 'booking-success.html';
+            const donHangData = {};
+            // Trong đồ án, bạn sẽ điều hướng đến trang "booking-success.php"
+            // window.location.href = 'booking-success.php';
 
-            window.location.href = 'booking-success.html';
+            window.location.href = 'booking-success.php';
         });
     </script>
 
