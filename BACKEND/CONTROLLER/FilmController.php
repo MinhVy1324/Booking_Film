@@ -1,48 +1,30 @@
 <?php
-// File: backend/CONTROLLER/FilmController.php
+// File: BACKEND/CONTROLLER/FilmController.php
 session_start();
-include_once __DIR__ . '/../DAO/PhimDAO.php';
-include_once __DIR__ . '/../MODEL/Phim.php';
+include_once __DIR__ . '/../BUS/PhimBUS.php'; // GỌI BUS
 
-// Bảo vệ: Chỉ Admin
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'QuanTri') {
-    die("Bạn không có quyền truy cập.");
-}
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'QuanTri') { die("..."); }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     
-    $phimDAO = new PhimDAO();
     $action = $_POST['action'];
+    $phimBUS = new PhimBUS(); // TẠO BUS
 
     switch ($action) {
         case 'add':
-            // 1. Tạo đối tượng Model
-            $phim = new Phim();
-            $phim->setTenPhim($_POST['tenPhim']);
-            $phim->setMoTa($_POST['moTa']);
-            $phim->setNgayKhoiChieu($_POST['ngayKhoiChieu']);
-            $phim->setThoiLuong((int)$_POST['thoiLuong']);
-            $phim->setPosterUrl($_POST['posterUrl']);
-            $phim->setTheLoai($_POST['theLoai']);
-            $phim->setXepHang($_POST['xepHang']);
-
-            // 2. Gọi DAO
-            if ($phimDAO->themPhim($phim)) {
-                header("Location: ../../ADMIN/films.php?status=add_success");
-            } else {
-                header("Location: ../../ADMIN/films.php?status=error");
-            }
+            $result = $phimBUS->xuLyThemPhim(
+                $_POST['tenPhim'], $_POST['moTa'], $_POST['ngayKhoiChieu'],
+                $_POST['thoiLuong'], $_POST['posterUrl'], $_POST['theLoai'], $_POST['xepHang']
+            );
+            header("Location: ../../ADMIN/films.php?status=" . $result['message']);
             break;
 
         case 'delete':
-            $phimId = (int)$_POST['phim_id'];
-            
-            // 2. Gọi DAO
-            if ($phimDAO->xoaPhim($phimId)) {
+            // (Logic xóa đơn giản, có thể không cần qua BUS)
+            $phimDAO = new PhimDAO();
+            if ($phimDAO->xoaPhim((int)$_POST['phim_id'])) {
                 header("Location: ../../ADMIN/films.php?status=delete_success");
-            } else {
-                header("Location: ../../ADMIN/films.php?status=error");
-            }
+            } else { header("Location: ../../ADMIN/films.php?status=error"); }
             break;
     }
 }

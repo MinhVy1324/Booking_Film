@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'QuanTri') {
     // Nếu không phải Admin, chuyển hướng về trang đăng nhập
     header("Location: ../login.php?error=accessdenied");
     exit(); // Dừng script ngay lập tức
+
 }
 ?>
 <!DOCTYPE html>
@@ -272,7 +273,7 @@ if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'QuanTri') {
                     </a>
                 </li>
                 <li>
-                    <a href="../BACKEND/logout.php" style="color: #e50914;">Đăng Xuất</a>
+                    <a href="/Booking_Film/BACKEND/CONTROLLER/LogoutController.php" style="color: #e50914;">Đăng Xuất</a>
                 </li>
             </ul>
         </nav>

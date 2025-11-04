@@ -2,21 +2,16 @@
 // File: login.php (Thư mục gốc)
 
 // 1. Nạp Header (Menu, Session)
-// header.php sẽ bắt đầu session, mở thẻ <html>, <head>, và <body>
-include 'templates/header.php'; 
+// (Khớp với tên thư mục TEMPLATES của bạn)
+include 'TEMPLATES/header.php'; 
 ?>
 
 <title>Đăng Nhập - Đặt Vé Xem Phim</title>
 
 <style>
-    /* Lưu ý: CSS cho .main-header và .main-footer 
-       có thể đã nằm trong file CSS chung của bạn 
-       (hoặc trong <style> của header.php)
-    */
-
     /* Phần nội dung chính (giữa trang) */
     .main-content {
-        flex-grow: 1; /* Đẩy footer xuống dưới (nếu header set body là flex) */
+        flex-grow: 1; /* Đẩy footer xuống dưới */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -50,6 +45,16 @@ include 'templates/header.php';
         text-align: center;
         margin-bottom: 20px;
     }
+    
+    .login-success {
+        color: #61d9a4; /* Màu xanh */
+        background-color: rgba(97, 217, 164, 0.1);
+        border: 1px solid #61d9a4;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
     /* Nhóm ô nhập liệu */
     .input-group {
@@ -73,7 +78,6 @@ include 'templates/header.php';
         border-color: #e50914;
     }
 
-    /* Nhãn (label) */
     .input-label {
         position: absolute;
         top: 14px;
@@ -94,7 +98,6 @@ include 'templates/header.php';
         padding: 0 5px;
     }
 
-    /* Nút Đăng Nhập */
     .login-btn {
         width: 100%;
         padding: 12px;
@@ -109,12 +112,8 @@ include 'templates/header.php';
         transition: background-color 0.3s;
         margin-top: 10px;
     }
-
-    .login-btn:hover {
-        background-color: #c40812;
-    }
+    .login-btn:hover { background-color: #c40812; }
     
-    /* Các link phụ */
     .login-options {
         display: flex;
         justify-content: space-between;
@@ -123,31 +122,16 @@ include 'templates/header.php';
         font-size: 0.9rem;
         color: #aaa;
     }
-
-    .login-options a {
-        color: #fff;
-        text-decoration: none;
-    }
-    
-    .login-options a:hover {
-        text-decoration: underline;
-    }
+    .login-options a { color: #fff; text-decoration: none; }
+    .login-options a:hover { text-decoration: underline; }
     
     .signup-link {
         margin-top: 30px;
         text-align: center;
         color: #aaa;
     }
-    
-    .signup-link a {
-        color: #fff;
-        font-weight: bold;
-        text-decoration: none;
-    }
-    
-    .signup-link a:hover {
-        text-decoration: underline;
-    }
+    .signup-link a { color: #fff; font-weight: bold; text-decoration: none; }
+    .signup-link a:hover { text-decoration: underline; }
 </style>
 
 <main class="main-content">
@@ -156,19 +140,22 @@ include 'templates/header.php';
         <h1>Đăng Nhập</h1>
         
         <?php
-        // 2. Code PHP để hiển thị thông báo lỗi
-        // (Nếu file login_process.php chuyển hướng về với ?error=1)
-        if (isset($_GET['error']) && $_GET['error'] == 1) {
-            echo '<p class="login-error">Email hoặc Mật khẩu không chính xác!</p>';
+        // 2. Code PHP để hiển thị thông báo (từ Controller)
+        if (isset($_GET['error'])) {
+            $message = 'Email hoặc Mật khẩu không chính xác!';
+            if ($_GET['error'] == 'accessdenied') {
+                $message = 'Bạn phải đăng nhập (vai trò Admin) để xem trang đó!';
+            }
+            echo '<p class="login-error">' . $message . '</p>';
         }
         
         // Hiển thị thông báo nếu đăng ký thành công
         if (isset($_GET['signup']) && $_GET['signup'] == 'success') {
-            echo '<p style="color: green; text-align: center; margin-bottom: 20px;">Đăng ký thành công! Vui lòng đăng nhập.</p>';
+            echo '<p class="login-success">Đăng ký thành công! Vui lòng đăng nhập.</p>';
         }
         ?>
         
-        <form method="POST" action="backend/CONTROLLER/LoginController.php">
+        <form method="POST" action="BACKEND/CONTROLLER/LoginController.php">
             
             <div class="input-group">
                 <input type="email" id="email" name="email" class="input-field" placeholder=" " required>
@@ -198,6 +185,6 @@ include 'templates/header.php';
     </div>
 
 </main> <?php
-// 4. Nạp Footer (để đóng </body> và </html>)
-include 'templates/footer.php'; 
+// 4. Nạp Footer
+include 'TEMPLATES/footer.php'; 
 ?>

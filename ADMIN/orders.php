@@ -1,24 +1,34 @@
 <?php
 // File: ADMIN/orders.php
-include '../templates/admin_header.php'; // Nạp header
-include_once __DIR__ . '/../DAO/DonDatVeDAO.php'; // NẠP DAO MỚI
 
-// 1. Tạo đối tượng DAO
+// Set page title before including header
+$pageTitle = "Admin - Quản Lý Đơn Hàng";
+
+// 1. Include header
+include_once dirname(__DIR__) . '/TEMPLATES/admin_header.php'; 
+
+// 2. Include DAO
+include_once dirname(__DIR__) . '/BACKEND/DAO/DonDatVeDAO.php'; 
+
+// 3. Create DAO instance
 $donDatVeDAO = new DonDatVeDAO();
-// 2. Gọi DAO để lấy danh sách
+
+// 4. Get order list
 $orderList = $donDatVeDAO->getDonHangSummary();
 ?>
-
-<title>Admin - Quản Lý Đơn Hàng</title>
-
-<style>
-    /* (CSS cho .status-badge...) */
-</style>
 
 <main class="main-content">
     <header class="main-header">
         <h1>Quản Lý Đơn Hàng</h1>
     </header>
+
+    <?php
+    // 3. Hiển thị thông báo
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] == 'cancel_success') echo '<p class="status-message success">Hủy đơn hàng thành công!</p>';
+        if ($_GET['status'] == 'error') echo '<p class="status-message error">Có lỗi xảy ra!</p>';
+    }
+    ?>
 
     <table class="content-table">
         <thead>
@@ -35,7 +45,7 @@ $orderList = $donDatVeDAO->getDonHangSummary();
         </thead>
         <tbody>
             <?php
-            // 3. Lặp qua danh sách đã lấy từ DAO
+            // 5. Lặp qua danh sách
             if (count($orderList) > 0) {
                 foreach($orderList as $row) {
             ?>
@@ -61,7 +71,7 @@ $orderList = $donDatVeDAO->getDonHangSummary();
                     </td>
                     <td>
                         <?php if ($row['TrangThai'] == 'DaThanhToan'): ?>
-                            <form action="../backend/CONTROLLER/OrderController.php" method="POST" class="delete-form">
+                            <form action="../BACKEND/CONTROLLER/OrderController.php" method="POST" class="delete-form">
                                 <input type="hidden" name="action" value="cancel_order">
                                 <input type="hidden" name="order_id" value="<?php echo $row['Id']; ?>">
                                 <button type="submit" class="action-btn delete" onclick="return confirm('Bạn có chắc muốn hủy đơn này?');">Hủy Vé</button>
@@ -80,5 +90,5 @@ $orderList = $donDatVeDAO->getDonHangSummary();
 </main>
 
 <?php
-include '../TEMPLATES/admin_footer.php'; // Nạp footer
+include_once dirname(__DIR__) . '/TEMPLATES/admin_footer.php';
 ?>

@@ -1,7 +1,7 @@
 <?php
 // File: backend/DAO/RapDAO.php
 include_once __DIR__ . '/../Database.php';
-include_once __DIR__ . '/../MODEL/Rap.php';
+include_once __DIR__ . '/../DTO/Rap.php';
 
 class RapDAO {
     private $db;

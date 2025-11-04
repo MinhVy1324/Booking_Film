@@ -1,45 +1,35 @@
 <?php
-// File: backend/CONTROLLER/RoomController.php
+// File: BACKEND/CONTROLLER/RoomController.php
 session_start();
-include_once __DIR__ . '/../DAO/RapDAO.php';
-include_once __DIR__ . '/../DAO/PhongChieuDAO.php';
-include_once __DIR__ . '/../MODEL/Rap.php';
-include_once __DIR__ . '/../MODEL/PhongChieu.php';
+include_once __DIR__ . '/../BUS/RoomBUS.php'; // GỌI BUS
 
-// Bảo vệ: Chỉ Admin
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'QuanTri') {
-    die("Bạn không có quyền truy cập.");
-}
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'QuanTri') { die("..."); }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     
     $action = $_POST['action'];
+    $roomBUS = new RoomBUS(); // TẠO BUS
 
     if ($action == 'add_rap') {
-        $rap = new Rap();
-        $rap->setTenRap($_POST['tenRap']);
-        $rap->setDiaChi($_POST['diaChi']);
-        
-        $rapDAO = new RapDAO();
-        if ($rapDAO->themRap($rap)) {
-            header("Location: ../../ADMIN/rooms.php?status=add_rap_success");
-        } else {
-            header("Location: ../../ADMIN/rooms.php?status=error");
-        }
+        $result = $roomBUS->xuLyThemRap($_POST['tenRap'], $_POST['diaChi']);
+        header("Location: ../../ADMIN/rooms.php?status=" . $result['message']);
     }
     
-    if ($action == 'add_room') {
-        $phong = new PhongChieu();
-        $phong->setIdRap((int)$_POST['rap_id']);
-        $phong->setTenPhong($_POST['tenPhong']);
-        $phong->setSoLuongGhe((int)$_POST['soLuongGhe']);
+    if ($action == 'add_room_bulk') {
+        $result = $roomBUS->xuLyThemPhongHangLoat(
+            $_POST['rap_id'], 
+            $_POST['tenPhong'], 
+            (int)$_POST['soHang'],
+            (int)$_POST['soGheMoiHang'],
+            (int)$_POST['soHangVIP']
+        );
+        header("Location: ../../ADMIN/rooms.php?status=" . $result['message']);
+    }
 
-        $phongDAO = new PhongChieuDAO();
-        if ($phongDAO->themPhong($phong)) {
-            header("Location: ../../ADMIN/rooms.php?status=add_room_success");
-        } else {
-            header("Location: ../../ADMIN/rooms.php?status=error");
-        }
+    if ($action == 'delete_room') {
+        $result = $roomBUS->xuLyXoaPhong($_POST['phong_id']);
+        // Chuyển hướng quay lại trang rooms.php (và báo kết quả)
+        header("Location: ../../ADMIN/rooms.php?status=" . $result['message']);
     }
 }
 ?>

@@ -163,8 +163,8 @@ session_start();
                     <span>Xin chào, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</span>
                     <a href="backend/CONTROLLER/LogoutController.php" class="btn-primary">Đăng Xuất</a>
                 <?php else: ?>
-                    <a href="login.php">Đăng Nhập</a>
-                    <a href="signup.php" class="btn-primary">Đăng Ký</a>
+                    <a href="/login.php">Đăng Nhập</a>
+                    <a href="/signup.php" class="btn-primary">Đăng Ký</a>
                 <?php endif; ?>
             </div>
         </div>

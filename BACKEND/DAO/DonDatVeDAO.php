@@ -46,5 +46,33 @@ class DonDatVeDAO {
         $this->db->close();
         return $success;
     }
+
+    public function taoDonDatVe(DonDatVe $don) {
+        // Tạo lại kết nối
+        $this->db = (new Database())->getConnection();
+        
+        $sql = "INSERT INTO dondatve (TongTien, TrangThai, IdNguoiDung, IdSuatChieu) 
+                VALUES (?, 'DaThanhToan', ?, ?)";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $tongTien = $don->getTongTien();
+        $idNguoiDung = $don->getIdNguoiDung();
+        $idSuatChieu = $don->getIdSuatChieu();
+        
+        $stmt->bind_param("iii", $tongTien, $idNguoiDung, $idSuatChieu);
+
+        if ($stmt->execute()) {
+            // INSERT thành công, lấy ID cuối cùng
+            $last_id = $this->db->insert_id;
+            $stmt->close();
+            $this->db->close();
+            return $last_id; // Trả về ID của đơn hàng vừa tạo
+        } else {
+            $stmt->close();
+            $this->db->close();
+            return false; // Thất bại
+        }
+    }
 }
-?>DashboardDAO.php
+?>

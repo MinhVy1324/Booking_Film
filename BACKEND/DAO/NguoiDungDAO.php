@@ -3,7 +3,7 @@
 
 // Nạp các file cần thiết
 include_once __DIR__ . '/../Database.php'; // Kết nối CSDL
-include_once __DIR__ . '/../MODEL/NguoiDung.php'; // Model NguoiDung
+include_once __DIR__ . '/../DTO/NguoiDung.php'; // Model NguoiDung
 
 class NguoiDungDAO {
     

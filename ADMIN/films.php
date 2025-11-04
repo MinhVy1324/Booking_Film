@@ -1,7 +1,20 @@
 <?php
 // File: ADMIN/films.php
-// 1. Nạp header (đã chứa session_start, connect.php, và kiểm tra admin)
-include '../TEMPLATES/admin_header.php'; 
+
+// 1. Nạp header (Đã có kiểm tra Admin và nạp Database.php)
+// (Dùng dirname(__DIR__) để đi từ ADMIN -> Booking_Film -> TEMPLATES)
+include_once dirname(__DIR__) . '/TEMPLATES/admin_header.php'; 
+
+// 2. Nạp file DAO và Model (Dùng đường dẫn tuyệt đối)
+// (Đi từ ADMIN -> Booking_Film -> BACKEND -> DAO)
+include_once dirname(__DIR__) . '/BACKEND/DAO/PhimDAO.php';
+// (Model Phim đã được nạp trong DAO)
+
+// 3. ✅ TẠO ĐỐI TƯỢNG DAO (Bước quan trọng nhất)
+$phimDAO = new PhimDAO();
+
+// 4. ✅ GỌI DAO ĐỂ LẤY DANH SÁCH PHIM
+$listPhim = $phimDAO->getAllPhim();
 ?>
 
 <title>Admin - Quản Lý Phim</title>
@@ -15,15 +28,9 @@ include '../TEMPLATES/admin_header.php';
     <?php
     // 3. Hiển thị thông báo (nếu có từ URL)
     if (isset($_GET['status'])) {
-        if ($_GET['status'] == 'add_success') {
-            echo '<p class="status-message success">Thêm phim mới thành công!</p>';
-        }
-        if ($_GET['status'] == 'delete_success') {
-            echo '<p class="status-message success">Xóa phim thành công!</p>';
-        }
-        if ($_GET['status'] == 'error') {
-            echo '<p class="status-message error">Có lỗi xảy ra, vui lòng thử lại!</p>';
-        }
+        if ($_GET['status'] == 'add_success') echo '<p class="status-message success">Thêm phim mới thành công!</p>';
+        if ($_GET['status'] == 'delete_success') echo '<p class="status-message success">Xóa phim thành công!</p>';
+        if ($_GET['status'] == 'error') echo '<p class="status-message error">Có lỗi xảy ra, vui lòng thử lại!</p>';
     }
     ?>
 
@@ -39,24 +46,22 @@ include '../TEMPLATES/admin_header.php';
         </thead>
         <tbody>
             <?php
-            // Truy vấn CSDL
-            $sql = "SELECT Id, TenPhim, ThoiLuong, XepHang FROM Phim ORDER BY NgayKhoiChieu DESC";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
+            // 5. ✅ LẶP QUA DANH SÁCH ĐỐI TƯỢNG LẤY TỪ DAO
+            // Dòng 44 cũ của bạn ($result = $conn->query($sql)) đã được thay thế
+            if (count($listPhim) > 0) {
+                foreach($listPhim as $phim) { // $phim là 1 đối tượng
             ?>
                 <tr>
-                    <td><?php echo $row['Id']; ?></td>
-                    <td><?php echo htmlspecialchars($row['TenPhim']); ?></td>
-                    <td><?php echo $row['ThoiLuong']; ?> phút</td>
-                    <td><?php echo htmlspecialchars($row['XepHang']); ?></td>
+                    <td><?php echo $phim->getId(); ?></td>
+                    <td><?php echo htmlspecialchars($phim->getTenPhim()); ?></td>
+                    <td><?php echo $phim->getThoiLuong(); ?> phút</td>
+                    <td><?php echo htmlspecialchars($phim->getXepHang()); ?></td>
                     <td>
                         <a href="#" class="action-btn">Sửa</a>
                         
                         <form action="../BACKEND/CONTROLLER/FilmController.php" method="POST" class="delete-form">
                             <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="phim_id" value="<?php echo $row['Id']; ?>">
+                            <input type="hidden" name="phim_id" value="<?php echo $phim->getId(); ?>">
                             <button type="submit" class="action-btn delete" 
                                     onclick="return confirm('Bạn có chắc chắn muốn xóa phim này?');">
                                 Xóa
@@ -72,11 +77,10 @@ include '../TEMPLATES/admin_header.php';
             ?>
         </tbody>
     </table>
+</main>
 
-</main> <div id="movieModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeBtn">&times;</span>
-        <h2>Thêm Phim Mới</h2>
+<div id="movieModal" class="modal"> <div class="modal-content">
+        <span class="close-btn">&times;</span> <h2>Thêm Phim Mới</h2>
         
         <form id="movieForm" action="../BACKEND/CONTROLLER/FilmController.php" method="POST">
             <input type="hidden" name="action" value="add">
@@ -85,32 +89,26 @@ include '../TEMPLATES/admin_header.php';
                 <label for="tenPhim">Tên Phim</label>
                 <input type="text" id="tenPhim" name="tenPhim" required>
             </div>
-            
             <div class="form-group">
                 <label for="moTa">Mô Tả</label>
                 <textarea id="moTa" name="moTa"></textarea>
             </div>
-
             <div class="form-group">
                 <label for="ngayKhoiChieu">Ngày Khởi Chiếu</label>
                 <input type="date" id="ngayKhoiChieu" name="ngayKhoiChieu" required>
             </div>
-            
             <div class="form-group">
                 <label for="thoiLuong">Thời Lượng (phút)</label>
                 <input type="number" id="thoiLuong" name="thoiLuong" required>
             </div>
-            
             <div class="form-group">
                 <label for="posterUrl">Link Poster (URL)</label>
                 <input type="text" id="posterUrl" name="posterUrl">
             </div>
-
             <div class="form-group">
                 <label for="theLoai">Thể Loại</label>
                 <input type="text" id="theLoai" name="theLoai">
             </div>
-            
             <div class="form-group">
                 <label for="xepHang">Xếp Hạng (Giới hạn tuổi)</label>
                 <select id="xepHang" name="xepHang">
@@ -120,7 +118,6 @@ include '../TEMPLATES/admin_header.php';
                     <option value="C18">C18 - Trên 18 tuổi</option>
                 </select>
             </div>
-            
             <div class="form-group">
                 <button type="submit" class="add-new-btn">Lưu Lại</button>
             </div>
@@ -130,5 +127,5 @@ include '../TEMPLATES/admin_header.php';
 
 <?php
 // 6. Nạp footer
-include '../TEMPLATES/admin_footer.php'; 
+include_once dirname(__DIR__) . '/TEMPLATES/admin_footer.php'; 
 ?>

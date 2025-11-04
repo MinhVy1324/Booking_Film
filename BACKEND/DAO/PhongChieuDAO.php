@@ -1,7 +1,7 @@
 <?php
 // File: backend/DAO/PhongChieuDAO.php
 include_once __DIR__ . '/../Database.php';
-include_once __DIR__ . '/../MODEL/PhongChieu.php';
+include_once __DIR__ . '/../DTO/PhongChieu.php';
 
 class PhongChieuDAO {
     private $db;
@@ -32,16 +32,26 @@ class PhongChieuDAO {
 
     // Thêm phòng
     public function themPhong(PhongChieu $phong) {
-        $sql = "INSERT INTO PhongChieu (TenPhong, SoLuongGhe, IdRap) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO phongchieu (TenPhong, SoLuongGhe, IdRap) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($sql);
+        
         $ten = $phong->getTenPhong();
-        $sl = $phong->getSoLuongGhe();
+        // Tính tổng số ghế (Hàng * Cột)
+        $sl = $phong->getSoLuongGhe(); 
         $idRap = $phong->getIdRap();
+        
         $stmt->bind_param("sii", $ten, $sl, $idRap);
-        $success = $stmt->execute();
-        $stmt->close();
-        $this->db->close();
-        return $success;
+        
+        if ($stmt->execute()) {
+            $last_id = $this->db->insert_id; // Lấy ID vừa được tạo
+            $stmt->close();
+            $this->db->close();
+            return $last_id; // Trả về ID
+        } else {
+            $stmt->close();
+            $this->db->close();
+            return false; // Thất bại
+        }
     }
 
     // Lấy tất cả phòng (kèm tên rạp, cho dropdown của trang Suất Chiếu)
@@ -60,6 +70,19 @@ class PhongChieuDAO {
         }
         $this->db->close();
         return $phongList;
+    }
+
+    public function xoaPhong($idPhong) {
+        $this->db = (new Database())->getConnection();
+        
+        // (Nhờ ON DELETE CASCADE, các ghế và suất chiếu của phòng này sẽ tự động bị xóa)
+        $sql = "DELETE FROM phongchieu WHERE Id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $idPhong);
+        $success = $stmt->execute();
+        $stmt->close();
+        $this->db->close();
+        return $success;
     }
 }
 ?>

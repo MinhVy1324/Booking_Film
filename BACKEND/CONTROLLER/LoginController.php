@@ -1,50 +1,46 @@
 <?php
-// File: backend/CONTROLLER/LoginController.php
+// File: BACKEND/CONTROLLER/LoginController.php
 
-// Nạp file DAO
-include_once __DIR__ . '/../DAO/NguoiDungDAO.php';
-// (Nạp Model NguoiDung nếu cần, nhưng DAO đã nạp rồi)
+// Nạp file BUS
+include_once __DIR__ . '/../BUS/NguoiDungBUS.php';
 
-// Bắt đầu session để lưu trạng thái đăng nhập
+// (Không cần nạp DAO hay DTO ở đây nữa, BUS đã nạp rồi)
+
 session_start();
 
 // 1. Kiểm tra xem người dùng có nhấn nút submit (POST) không
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    // 2. Lấy dữ liệu từ form (login.php)
+    // 2. Lấy dữ liệu từ form (Giao diện)
     $email = $_POST['email'];
     $matKhau = $_POST['password'];
 
-    // 3. Tạo một đối tượng DAO (Đầu bếp)
-    $nguoiDungDAO = new NguoiDungDAO();
+    // 3. TẠO ĐỐI TƯỢNG BUS (Quản lý)
+    $nguoiDungBUS = new NguoiDungBUS();
     
-    // 4. Gọi phương thức DAO để kiểm tra (Giao việc cho Đầu bếp)
-    // $user là một đối tượng NguoiDung (Model) hoặc là null
-    $user = $nguoiDungDAO->kiemTraDangNhap($email, $matKhau);
+    // 4. GỌI BUS ĐỂ XỬ LÝ (Controller giao việc cho BUS)
+    // $user là một đối tượng NguoiDung (DTO) hoặc là null
+    $user = $nguoiDungBUS->xuLyDangNhap($email, $matKhau);
 
-    // 5. Kiểm tra kết quả
+    // 5. Kiểm tra kết quả (do BUS trả về)
     if ($user != null) {
         // ĐĂNG NHẬP THÀNH CÔNG!
         
-        // 6. Lưu thông tin người dùng (từ đối tượng Model) vào SESSION
+        // 6. Lưu thông tin (từ DTO) vào SESSION
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['user_name'] = $user->getHoTen();
         $_SESSION['user_role'] = $user->getLoaiNguoiDung();
 
-        // 7. RẼ NHÁNH (Mấu chốt)
+        // 7. RẼ NHÁNH
         if ($user->getLoaiNguoiDung() == 'QuanTri') {
-            // Nếu là Admin -> Chuyển hướng về trang Dashboard
-            // (Lùi ra 2 cấp: /backend/CONTROLLER/ -> /)
             header("Location: ../../ADMIN/dashboard.php");
         } else {
-            // Nếu là Khách hàng -> Chuyển hướng về Trang Chủ
             header("Location: ../../index.php");
         }
         exit(); // Kết thúc script
 
     } else {
         // ĐĂNG NHẬP THẤT BẠI
-        // Chuyển hướng về trang login với thông báo lỗi
         header("Location: ../../login.php?error=1");
         exit();
     }
