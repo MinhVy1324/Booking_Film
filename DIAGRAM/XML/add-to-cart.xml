@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="Sequence-Add-To-Cart" name="Sequence Diagram - Add To Cart">
+    <mxGraphModel dx="1400" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actor" value="KhachHang" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-actor" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="100" width="10" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="view" value=": seat-selection.php (View)" style="shape=umlLifeline;participant=umlBoundary;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="180" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-view" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="235" y="80" width="10" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="controller" value=": BookingController" style="shape=umlLifeline;participant=umlControl;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-controller" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="415" y="80" width="10" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="bus" value=": BookingBUS" style="shape=umlLifeline;participant=umlBoundary;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="540" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-bus" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="595" y="80" width="10" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="dao" value=": SuatChieuDAO" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-dao" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="775" y="80" width="10" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="session" value=": $_SESSION" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="900" y="40" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-session" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="945" y="80" width="10" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="frame" value="Kịch bản: User Thêm Vé Vào Giỏ Hàng" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="10" width="1000" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="msg1" value="1. Chọn ghế (JavaScript)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-actor" target="lifeline-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg2" value="2. submit(formData, action='add_to_cart')" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-actor" target="lifeline-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg3" value="3. [Gửi POST Request]" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-view" target="lifeline-controller">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-controller-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="210" width="20" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="msg4" value="4. xuLyThemVaoGioHang(formData)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-bus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-bus-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="240" width="20" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="msg5" value="5. getSuatChieuDetailsById(id)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-bus-1" target="lifeline-dao">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-dao-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="270" width="20" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="msg6" value="6. [Trả về 'suatchieu_details']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-dao-1" target="activation-bus-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg7" value="7. [Trả về 'cart_data']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-bus-1" target="activation-controller-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg8" value="8. $_SESSION['cart'] = cart_data" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-session-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="450" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="msg9" value="9. header('Location: ...checkout.php')" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-actor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

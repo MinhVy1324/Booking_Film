@@ -1,0 +1,142 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="Sequence-Checkout" name="Sequence Diagram - Checkout Success">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actor" value="KhachHang" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-actor" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="100" width="10" height="880" as="geometry" />
+        </mxCell>
+        <mxCell id="view" value=": checkout.php (View)" style="shape=umlLifeline;participant=umlBoundary;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="140" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-view" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="195" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="controller" value=": BookingController" style="shape=umlLifeline;participant=umlControl;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-controller" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="bus" value=": BookingBUS" style="shape=umlLifeline;participant=umlBoundary;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="420" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-bus" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="475" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="session" value=": $_SESSION" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="550" y="40" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-session" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="595" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="dao-don" value=": DonDatVeDAO" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="680" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-dao-don" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="735" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="dao-ghe" value=": GheDAO" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="820" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-dao-ghe" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="875" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="dao-chitiet" value=": ChiTietDatVeDAO" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="960" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-dao-chitiet" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value=": CSDL" style="shape=umlLifeline;participant=umlDatabase;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="40" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-db" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1145" y="80" width="10" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="frame" value="Kịch bản: User Thanh Toán Thành Công" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="10" width="1170" height="980" as="geometry" />
+        </mxCell>
+        <mxCell id="msg1" value="1. submit(action='checkout')" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-actor" target="lifeline-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg2" value="2. [Gửi POST Request]" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-view" target="lifeline-controller">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-controller-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="170" width="20" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="msg3" value="3. Đọc $_SESSION['cart'] &amp; $_SESSION['user_id']" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-session-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="200" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="msg4" value="4. [Trả về 'cart_data' &amp; 'user_id']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-session-1" target="activation-controller-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg5" value="5. xuLyThanhToan(cart_data, user_id)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-bus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-bus-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="290" width="20" height="550" as="geometry" />
+        </mxCell>
+        <mxCell id="msg6" value="6. taoDonDatVe(donDatVeDTO)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-bus-1" target="lifeline-dao-don">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-dao-don" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="320" width="20" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="msg7" value="7. INSERT INTO dondatve (...)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-dao-don" target="lifeline-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg8" value="8. [Trả về 'new_dondatve_id']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-db" target="activation-dao-don">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg9" value="9. [Trả về 'new_dondatve_id']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-dao-don" target="activation-bus-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="loop-frame" value="Loop: Cho mỗi ghế trong giỏ hàng" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="440" width="670" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="msg10" value="10.1. getGheById(idGhe)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="loop-frame" source="activation-bus-1" target="lifeline-dao-ghe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-dao-ghe" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="loop-frame">
+          <mxGeometry x="380" y="50" width="20" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="msg11" value="10.2. [Trả về gheDTO (chứa giá)]" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="loop-frame" source="activation-dao-ghe" target="activation-bus-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg12" value="10.3. themChiTiet(ctdvDTO)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="loop-frame" source="activation-bus-1" target="lifeline-dao-chitiet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-dao-chitiet" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="loop-frame">
+          <mxGeometry x="520" y="150" width="20" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="msg13" value="10.4. INSERT INTO chitietdatve (...)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="loop-frame" source="activation-dao-chitiet" target="lifeline-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg14" value="10.5. [Trả về 'true']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="loop-frame" source="lifeline-db" target="activation-dao-chitiet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg15" value="11. [Trả về 'new_order_id']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-bus-1" target="activation-controller-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg16" value="12. unset($_SESSION['cart'])" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-session">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-session-2" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="860" width="20" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="msg17" value="13. header('Location: ...booking-success.php')" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-actor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

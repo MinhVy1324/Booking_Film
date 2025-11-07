@@ -13,12 +13,15 @@ class Ghe {
     public function getId() {
         return $this->Id;
     }
+
     public function getTenGhe() {
         return $this->TenGhe;
     }
+
     public function getLoaiGhe() {
         return $this->LoaiGhe;
     }
+
     public function getIdPhongChieu() {
         return $this->IdPhongChieu;
     }
@@ -27,12 +30,15 @@ class Ghe {
     public function setId($id) {
         $this->Id = $id;
     }
+
     public function setTenGhe($ten) {
         $this->TenGhe = $ten;
     }
+
     public function setLoaiGhe($loai) {
         $this->LoaiGhe = $loai;
     }
+    
     public function setIdPhongChieu($id) {
         $this->IdPhongChieu = $id;
     }

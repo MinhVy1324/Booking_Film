@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="Sequence-Admin-Add-Film" name="Sequence Diagram - Admin Add Film">
+    <mxGraphModel dx="1400" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="actor" value="QuanTriVien" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-actor" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="100" width="10" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="view" value=": films.php (View)" style="shape=umlLifeline;participant=umlBoundary;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="180" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-view" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="235" y="80" width="10" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="controller" value=": FilmController" style="shape=umlLifeline;participant=umlControl;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-controller" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="415" y="80" width="10" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="bus" value=": PhimBUS" style="shape=umlLifeline;participant=umlBoundary;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="540" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-bus" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="595" y="80" width="10" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="dao" value=": PhimDAO" style="shape=umlLifeline;participant=umlEntity;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-dao" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="775" y="80" width="10" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value=": CSDL (MySQL)" style="shape=umlLifeline;participant=umlDatabase;deletable=0;resizable=0;whiteSpace=wrap;html=1;size=40;" vertex="1" parent="1">
+          <mxGeometry x="900" y="40" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-db" value="" style="line;strokeWidth=1;direction=south;html=1;" vertex="1" parent="1">
+          <mxGeometry x="945" y="80" width="10" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="frame" value="Kịch bản: Admin Thêm Phim Mới Thành Công" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="10" width="1000" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="msg1" value="1. submit(formData, action='add')" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-actor" target="lifeline-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg2" value="2. [Gửi POST Request]" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="lifeline-view" target="lifeline-controller">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-controller-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="170" width="20" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="msg3" value="3. xuLyThemPhim(formData)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-bus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-bus-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="200" width="20" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="note-bus" value="BUS: Kiểm tra nghiệp vụ (thoiLuong > 0, ...)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" vertex="1" parent="1">
+          <mxGeometry x="620" y="220" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="note-bus-dto" value="BUS: Tạo đối tượng Phim (DTO)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" vertex="1" parent="1">
+          <mxGeometry x="620" y="280" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="msg4" value="4. themPhim(phimDTO)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-bus-1" target="lifeline-dao">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-dao-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="340" width="20" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="msg5" value="5. INSERT INTO phim (...)" style="endArrow=classic;html=1;rounded=0;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-dao-1" target="lifeline-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="activation-db-1" value="" style="shape=umlActivation;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="370" width="20" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="msg6" value="6. [Trả về 'true']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-db-1" target="activation-dao-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg7" value="7. [Trả về 'true']" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-dao-1" target="activation-bus-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg8" value="8. [Trả về ['status'=&gt;true, 'message'=&gt;'add_success']]" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-bus-1" target="activation-controller-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="msg9" value="9. header('Location: ...?status=add_success')" style="endArrow=classic;html=1;rounded=0;dashed=1;align=left;verticalAlign=top;" edge="1" parent="1" source="activation-controller-1" target="lifeline-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
