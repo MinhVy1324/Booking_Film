@@ -57,16 +57,17 @@ $listPhim = $phimDAO->getAllPhim();
                     <td><?php echo $phim->getThoiLuong(); ?> phút</td>
                     <td><?php echo htmlspecialchars($phim->getXepHang()); ?></td>
                     <td>
-                        <a href="#" class="action-btn">Sửa</a>
-                        
-                        <form action="../BACKEND/CONTROLLER/FilmController.php" method="POST" class="delete-form">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="phim_id" value="<?php echo $phim->getId(); ?>">
-                            <button type="submit" class="action-btn delete" 
-                                    onclick="return confirm('Bạn có chắc chắn muốn xóa phim này?');">
-                                Xóa
-                            </button>
-                        </form>
+                        <a href="#" class="action-btn edit-btn">Sửa
+                            data-id="<?php echo $phim->getId(); ?>"
+                            data-ten="<?php echo htmlspecialchars($phim->getTenPhim()); ?>"
+                            data-mota="<?php echo htmlspecialchars($phim->getMoTa()); ?>"
+                            data-ngay="<?php echo $phim->getNgayKhoiChieu(); ?>"
+                            data-thoiluong="<?php echo $phim->getThoiLuong(); ?>"
+                            data-poster="<?php echo htmlspecialchars($phim->getPosterUrl()); ?>"
+                            data-theloai="<?php echo htmlspecialchars($phim->getTheLoai()); ?>"
+                            data-xephang="<?php echo $phim->getXepHang(); ?>">
+                           Sửa
+                        </a>
                     </td>
                 </tr>
             <?php
@@ -79,50 +80,26 @@ $listPhim = $phimDAO->getAllPhim();
     </table>
 </main>
 
-<div id="movieModal" class="modal"> <div class="modal-content">
-        <span class="close-btn">&times;</span> <h2>Thêm Phim Mới</h2>
+<div id="movieModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 id="modalTitle">Thêm Phim Mới</h2> 
         
         <form id="movieForm" action="../BACKEND/CONTROLLER/FilmController.php" method="POST">
-            <input type="hidden" name="action" value="add">
+            
+            <input type="hidden" name="action" id="modalAction" value="add">
+            <input type="hidden" name="phim_id" id="modalPhimId">
             
             <div class="form-group">
                 <label for="tenPhim">Tên Phim</label>
                 <input type="text" id="tenPhim" name="tenPhim" required>
             </div>
             <div class="form-group">
-                <label for="moTa">Mô Tả</label>
-                <textarea id="moTa" name="moTa"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="ngayKhoiChieu">Ngày Khởi Chiếu</label>
-                <input type="date" id="ngayKhoiChieu" name="ngayKhoiChieu" required>
-            </div>
-            <div class="form-group">
-                <label for="thoiLuong">Thời Lượng (phút)</label>
-                <input type="number" id="thoiLuong" name="thoiLuong" required>
-            </div>
-            <div class="form-group">
-                <label for="posterUrl">Link Poster (URL)</label>
-                <input type="text" id="posterUrl" name="posterUrl">
-            </div>
-            <div class="form-group">
-                <label for="theLoai">Thể Loại</label>
-                <input type="text" id="theLoai" name="theLoai">
-            </div>
-            <div class="form-group">
-                <label for="xepHang">Xếp Hạng (Giới hạn tuổi)</label>
-                <select id="xepHang" name="xepHang">
-                    <option value="P">P - Mọi lứa tuổi</option>
-                    <option value="C13">C13 - Trên 13 tuổi</option>
-                    <option value="C16">C16 - Trên 16 tuổi</option>
-                    <option value="C18">C18 - Trên 18 tuổi</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="add-new-btn">Lưu Lại</button>
+                <button type="submit" class="add-new-btn" id="modalSubmitBtn">Lưu Lại</button>
             </div>
         </form>
     </div>
+</div>
 </div>
 
 <?php

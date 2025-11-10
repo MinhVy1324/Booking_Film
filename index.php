@@ -17,6 +17,8 @@ $list_dang_chieu = $phimDAO->getPhimDangChieu();
 // Tạo đối tượng DAO mới vì hàm trước đã đóng kết nối
 $list_sap_chieu = (new PhimDAO())->getPhimSapChieu(); 
 
+$phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
+
 ?>
 
 <title>Trang Chủ - Đặt Vé Xem Phim</title>
@@ -92,10 +94,46 @@ $list_sap_chieu = (new PhimDAO())->getPhimSapChieu();
     .movie-card .btn-buy:hover { background-color: #c40812; }
 </style>
 
+<?php 
+    // 1. (Đoạn code này giả định rằng biến $phim_banner 
+    //    đã được lấy từ PhimDAO->getPhimSapChieuNoiBat() ở đầu file index.php)
+
+    // 2. Chuẩn bị style cho banner
+    $banner_style = ""; // Mặc định là không có ảnh nền (chỉ màu đen)
+    
+    if ($phim_banner) {
+        // Nếu có phim, tạo style inline
+        
+        // Lấy đường dẫn an toàn từ CSDL (ví dụ: 'IMAGES/QVSD.jpg')
+        $posterUrl = htmlspecialchars($phim_banner->getPosterUrl());
+        
+        // Tạo ra chuỗi style
+        // Đường dẫn '$posterUrl' là đường dẫn tương đối từ file index.php
+        $banner_style = "style=\"background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('" . $posterUrl . "') center center/cover;\"";
+    }
+?>
+
 <section class="hero-banner">
-    <h1>Gã Điên: Điệu Nhảy Của Hai Người</h1>
-    <p>Phim tâm lý tội phạm, âm nhạc mới nhất.</p>
-    <a href="USER/movie-details.php?id=3" class="btn-primary">Đặt Vé Ngay</a>
+    <?php if ($phim_banner): // Kiểm tra xem có phim sắp chiếu không ?>
+        
+        <h1><?php echo htmlspecialchars($phim_banner->getTenPhim()); ?></h1>
+        
+        <p>
+            <?php echo htmlspecialchars($phim_banner->getTheLoai()); ?> - 
+            Sắp ra mắt ngày <?php echo date('d/m/Y', strtotime($phim_banner->getNgayKhoiChieu())); ?>
+        </p>
+        
+        <a href="USER/movie-details.php?id=<?php echo $phim_banner->getId(); ?>" class="btn-primary" 
+           style="background-color: #555; cursor: pointer; border-color: #555;">
+           XEM CHI TIẾT
+        </a>
+
+    <?php else: // Nếu CSDL không có phim nào sắp chiếu ?>
+        
+        <h1>Chào mừng đến với LOGO-PHIM</h1>
+        <p>Hiện chưa có phim nào sắp chiếu nổi bật.</p>
+        
+    <?php endif; ?>
 </section>
 
 <main class="movie-section container">

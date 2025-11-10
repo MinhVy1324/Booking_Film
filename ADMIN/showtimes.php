@@ -82,16 +82,17 @@ $listPhong = (new PhongChieuDAO())->getAllPhongWithRap();
 <div id="showtimeModal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <h2>Tạo Suất Chiếu Mới</h2>
+        <h2>Tạo Suất Chiếu Hàng Loạt</h2>
         
         <form action="../BACKEND/CONTROLLER/ShowtimeController.php" method="POST">
-            <input type="hidden" name="action" value="add_showtime">
+            <input type="hidden" name="action" value="add_bulk_showtime"> 
             
             <div class="form-group">
                 <label for="phim">Chọn Phim</label>
                 <select id="phim" name="phim_id" required>
                     <option value="">-- Vui lòng chọn phim --</option>
                     <?php
+                    // Lấy danh sách phim từ DAO (Code này đã có)
                     foreach ($listPhim as $phim) {
                         echo '<option value="' . $phim->getId() . '">' . htmlspecialchars($phim->getTenPhim()) . '</option>';
                     }
@@ -104,6 +105,7 @@ $listPhong = (new PhongChieuDAO())->getAllPhongWithRap();
                 <select id="phong" name="phong_id" required>
                     <option value="">-- Vui lòng chọn phòng --</option>
                     <?php
+                    // Lấy danh sách phòng (Code này đã có)
                     foreach ($listPhong as $phong) {
                         echo '<option value="' . $phong['Id'] . '">';
                         echo htmlspecialchars($phong['TenRap']) . ' - ' . htmlspecialchars($phong['TenPhong']);
@@ -115,13 +117,18 @@ $listPhong = (new PhongChieuDAO())->getAllPhongWithRap();
 
             <div class="form-group" style="display: flex; gap: 15px;">
                 <div style="flex: 1;">
-                    <label for="ngayChieu">Ngày Chiếu</label>
-                    <input type="date" id="ngayChieu" name="ngayChieu" required>
+                    <label for="ngayBatDau">Từ Ngày</label>
+                    <input type="date" id="ngayBatDau" name="ngayBatDau" required>
                 </div>
                 <div style="flex: 1;">
-                    <label for="gioBatDau">Giờ Bắt Đầu</label>
-                    <input type="time" id="gioBatDau" name="gioBatDau" required>
+                    <label for="ngayKetThuc">Đến Ngày</label>
+                    <input type="date" id="ngayKetThuc" name="ngayKetThuc" required>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cacGioChieu">Các Khung Giờ Chiếu (cách nhau bằng dấu phẩy)</label>
+                <input type="text" id="cacGioChieu" name="cacGioChieu" placeholder="Ví dụ: 09:30, 13:00, 19:00, 21:30" required>
             </div>
 
             <div class="form-group">
@@ -129,7 +136,7 @@ $listPhong = (new PhongChieuDAO())->getAllPhongWithRap();
                 <input type="number" id="giaVe" name="giaVe" placeholder="Ví dụ: 100000" required>
             </div>
             
-            <button type="submit" class="add-new-btn">Tạo Suất Chiếu</button>
+            <button type="submit" class="add-new-btn">Tạo Suất Chiếu Hàng Loạt</button>
         </form>
     </div>
 </div>

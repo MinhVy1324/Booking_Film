@@ -42,5 +42,36 @@ class PhimBUS {
             return ['status' => false, 'message' => 'error'];
         }
     }
+
+    public function xuLySuaPhim($id, $tenPhim, $moTa, $ngayKhoiChieu, $thoiLuong, $posterUrl, $theLoai, $xepHang) {
+        // LUẬT 1: Tên phim không được để trống
+        if (empty(trim($tenPhim))) {
+            return ['status' => false, 'message' => 'Tên phim không được để trống.'];
+        }
+
+        // LUẬT 2: Thời lượng phải là số dương
+        if (!is_numeric($thoiLuong) || (int)$thoiLuong <= 0) {
+            return ['status' => false, 'message' => 'Thời lượng phải là một số dương.'];
+        }
+
+        // Tất cả luật đã OK
+        $phim = new Phim();
+        $phim->setId((int)$id);
+        $phim->setTenPhim($tenPhim);
+        $phim->setMoTa($moTa);
+        $phim->setNgayKhoiChieu($ngayKhoiChieu);
+        $phim->setThoiLuong((int)$thoiLuong);
+        $phim->setPosterUrl($posterUrl);
+        $phim->setTheLoai($theLoai);
+        $phim->setXepHang($xepHang);
+
+        // (Tạo DAO mới vì hàm xuLyThemPhim có thể đã đóng kết nối)
+        $this->phimDAO = new PhimDAO();
+        if ($this->phimDAO->suaPhim($phim)) {
+            return ['status' => true, 'message' => 'edit_success'];
+        } else {
+            return ['status' => false, 'message' => 'error'];
+        }
+    }
 }
 ?>

@@ -10,15 +10,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     $scBUS = new SuatChieuBUS(); // TẠO BUS
 
     switch ($action) {
-        case 'add_showtime':
-            $result = $scBUS->xuLyThemSuatChieu(
-                $_POST['phim_id'], $_POST['phong_id'], $_POST['ngayChieu'],
-                $_POST['gioBatDau'], $_POST['giaVe']
+        
+        // THAY THẾ CASE 'add_showtime' CŨ BẰNG CASE NÀY
+        case 'add_bulk_showtime':
+            $result = $scBUS->xuLyThemSuatChieuHangLoat(
+                $_POST['phim_id'], 
+                $_POST['phong_id'], 
+                $_POST['giaVe'],
+                $_POST['ngayBatDau'], // Trường mới
+                $_POST['ngayKetThuc'], // Trường mới
+                $_POST['cacGioChieu']  // Trường mới
             );
             header("Location: ../../ADMIN/showtimes.php?status=" . $result['message']);
             break;
 
         case 'edit':
+            // (code 'edit' cũ của bạn giữ nguyên)
             $result = $scBUS->xuLySuaSuatChieu(
                 $_POST['suatchieu_id'], $_POST['phim_id'], $_POST['phong_id'],
                 $_POST['ngayChieu'], $_POST['gioBatDau'], $_POST['giaVe']

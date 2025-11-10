@@ -54,6 +54,38 @@ class PhimDAO {
         return $success;
     }
 
+    public function suaPhim(Phim $phim) {
+        $this->db = (new Database())->getConnection();
+        
+        $sql = "UPDATE phim SET 
+                    TenPhim = ?, 
+                    MoTa = ?, 
+                    NgayKhoiChieu = ?, 
+                    ThoiLuong = ?, 
+                    PosterUrl = ?, 
+                    TheLoai = ?, 
+                    XepHang = ? 
+                WHERE Id = ?";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $tenPhim = $phim->getTenPhim();
+        $moTa = $phim->getMoTa();
+        $ngay = $phim->getNgayKhoiChieu();
+        $thoiLuong = $phim->getThoiLuong();
+        $poster = $phim->getPosterUrl();
+        $theLoai = $phim->getTheLoai();
+        $xepHang = $phim->getXepHang();
+        $id = $phim->getId(); // ID của phim cần sửa
+
+        $stmt->bind_param("sssisssi", $tenPhim, $moTa, $ngay, $thoiLuong, $poster, $theLoai, $xepHang, $id);
+        
+        $success = $stmt->execute();
+        $stmt->close();
+        $this->db->close();
+        return $success;
+    }
+
     // Xóa 1 phim
     public function xoaPhim($id) {
         $sql = "DELETE FROM Phim WHERE Id = ?";
@@ -150,6 +182,40 @@ class PhimDAO {
         $stmt->close();
         $this->db->close();
         return null; // Không tìm thấy phim
+    }
+
+    public function getPhimSapChieuNoiBat() {
+        // (Tạo lại kết nối)
+        $this->db = (new Database())->getConnection();
+        
+        // Lấy phim có ngày khởi chiếu trong tương lai VÀ gần nhất
+        $sql = "SELECT * FROM phim 
+                WHERE NgayKhoiChieu > CURDATE() 
+                ORDER BY NgayKhoiChieu ASC 
+                LIMIT 1";
+        
+        $result = $this->db->query($sql);
+
+        if ($result && $result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            
+            // Tạo đối tượng DTO (Model)
+            $phim = new Phim();
+            $phim->setId($row['Id']);
+            $phim->setTenPhim($row['TenPhim']);
+            $phim->setMoTa($row['MoTa']);
+            $phim->setTheLoai($row['TheLoai']);
+            $phim->setThoiLuong($row['ThoiLuong']);
+            $phim->setNgayKhoiChieu($row['NgayKhoiChieu']);
+            $phim->setPosterUrl($row['PosterUrl']);
+            $phim->setXepHang($row['XepHang']);
+
+            $this->db->close();
+            return $phim;
+        }
+        
+        $this->db->close();
+        return null; // Không tìm thấy phim nào sắp chiếu
     }
 }
 ?>

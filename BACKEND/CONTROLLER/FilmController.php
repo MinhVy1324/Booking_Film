@@ -26,6 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
                 header("Location: ../../ADMIN/films.php?status=delete_success");
             } else { header("Location: ../../ADMIN/films.php?status=error"); }
             break;
+
+        case 'edit':
+            $result = $phimBUS->xuLySuaPhim(
+                $_POST['phim_id'], // ID của phim cần sửa
+                $_POST['tenPhim'], $_POST['moTa'], $_POST['ngayKhoiChieu'],
+                $_POST['thoiLuong'], $_POST['posterUrl'], $_POST['theLoai'], $_POST['xepHang']
+            );
+            header("Location: ../../ADMIN/films.php?status=" . $result['message']);
+            break;
     }
 }
 ?>
