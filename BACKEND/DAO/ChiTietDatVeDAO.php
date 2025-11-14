@@ -71,5 +71,35 @@ class ChiTietDatVeDAO {
             $this->db->close();
         }
     }
+
+    public function getGheByDonHangId($idDonDatVe) {
+        $this->db = (new Database())->getConnection();
+        
+        // JOIN với bảng 'ghe' để lấy 'TenGhe'
+        $sql = "SELECT g.TenGhe 
+                FROM chitietdatve ctdv
+                JOIN ghe g ON ctdv.IdGhe = g.Id
+                WHERE ctdv.IdDonDatVe = ?
+                ORDER BY g.TenGhe ASC";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $idDonDatVe);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        $tenGheList = []; // Mảng để chứa tên các ghế
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $tenGheList[] = $row['TenGhe'];
+            }
+        }
+        
+        $stmt->close();
+        $this->db->close();
+        
+        // Chuyển mảng ["A1", "A2"] thành chuỗi "A1, A2"
+        return implode(', ', $tenGheList); 
+    }
 }
 ?>

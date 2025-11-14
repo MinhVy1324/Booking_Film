@@ -1,61 +1,83 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0" version="28.2.9">
-  <diagram id="UseCase-Diagram" name="Use Case Model">
-    <mxGraphModel dx="1259" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+  <diagram id="UseCase-Diagram-Styled" name="Use Case Diagram (Styled)">
+    <mxGraphModel dx="1259" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="actor-user" value="KhachHang" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#64b5f6;strokeColor=#2986cc;" parent="1" vertex="1">
-          <mxGeometry x="100" y="320" width="30" height="60" as="geometry" />
+        <mxCell id="actor-user-parent" value="NguoiDung" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="540" y="30" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="actor-khachhang" value="KhachHang" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#64b5f6;strokeColor=#2986cc;" parent="1" vertex="1">
+          <mxGeometry x="100" y="350" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="actor-admin" value="QuanTriVien" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#da6b6b;strokeColor=#a83939;" parent="1" vertex="1">
-          <mxGeometry x="100" y="620" width="30" height="60" as="geometry" />
+          <mxGeometry x="990" y="550" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="system-boundary" value="Hệ Thống Bán Vé Xem Phim" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;verticalAlign=top;fillColor=none;strokeColor=#333333;" parent="1" vertex="1">
-          <mxGeometry x="200" y="40" width="580" height="840" as="geometry" />
+        <mxCell id="actor-bank" value="Ngân Hàng" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="100" y="700" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="system-boundary" value="" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=2;verticalAlign=top;fillColor=none;strokeColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="220" y="120" width="680" height="710" as="geometry" />
         </mxCell>
         <mxCell id="uc-login" value="Đăng nhập" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-          <mxGeometry x="300" y="80" width="160" height="60" as="geometry" />
+          <mxGeometry x="470" y="160" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="uc-signup" value="Đăng ký" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
-          <mxGeometry x="300" y="170" width="160" height="60" as="geometry" />
+        <mxCell id="uc-signup" value="Đăng ký" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="270" y="260" width="180" height="70" as="geometry" />
         </mxCell>
         <mxCell id="uc-view" value="Xem Phim &amp; Suất Chiếu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="300" y="260" width="160" height="60" as="geometry" />
+          <mxGeometry x="270" y="350" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc-profile" value="Quản lý Tài khoản (Profile)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="270" y="440" width="180" height="70" as="geometry" />
         </mxCell>
         <mxCell id="uc-book" value="Đặt Vé" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="300" y="350" width="160" height="60" as="geometry" />
+          <mxGeometry x="270" y="530" width="180" height="70" as="geometry" />
         </mxCell>
         <mxCell id="uc-seat" value="Chọn Ghế" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="540" y="300" width="140" height="50" as="geometry" />
+          <mxGeometry x="470" y="570" width="180" height="70" as="geometry" />
         </mxCell>
         <mxCell id="uc-checkout" value="Thanh Toán" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-          <mxGeometry x="540" y="380" width="140" height="50" as="geometry" />
+          <mxGeometry x="470" y="660" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="uc-admin-film" value="Quản lý Phim" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="300" y="490" width="160" height="60" as="geometry" />
+        <mxCell id="uc-admin-film" value="Quản lý Phim" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="670" y="260" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="uc-admin-room" value="Quản lý Rạp &amp; Phòng" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="300" y="580" width="160" height="60" as="geometry" />
+        <mxCell id="uc-admin-room" value="Quản lý Rạp &amp; Phòng" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="670" y="350" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="uc-admin-show" value="Quản lý Suất Chiếu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="300" y="670" width="160" height="60" as="geometry" />
+        <mxCell id="uc-admin-show" value="Quản lý Suất Chiếu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="670" y="440" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="uc-admin-order" value="Quản lý Đơn Hàng" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="300" y="760" width="160" height="60" as="geometry" />
+        <mxCell id="uc-admin-order" value="Quản lý Đơn Hàng" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="670" y="530" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="uc-admin-dash" value="Xem Báo Cáo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-          <mxGeometry x="540" y="620" width="140" height="50" as="geometry" />
+        <mxCell id="uc-admin-dash" value="Xem Báo Cáo (Dashboard)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="670" y="620" width="180" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="rel-user-login" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-user" target="uc-login" edge="1">
+        <mxCell id="rel-user-parent-login" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-user-parent" target="uc-login" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-user-signup" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-user" target="uc-signup" edge="1">
+        <mxCell id="rel-kh-parent" style="endArrow=block;endFill=0;html=1;rounded=0;" parent="1" source="actor-khachhang" target="actor-user-parent" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-user-view" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-user" target="uc-view" edge="1">
+        <mxCell id="rel-admin-parent" style="endArrow=block;endFill=0;html=1;rounded=0;" parent="1" source="actor-admin" target="actor-user-parent" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel-kh-signup" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-khachhang" target="uc-signup" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-user-book" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-user" target="uc-book" edge="1">
+        <mxCell id="rel-kh-view" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-khachhang" target="uc-view" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-kh-profile" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-khachhang" target="uc-profile" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel-kh-book" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-khachhang" target="uc-book" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rel-admin-film" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-admin" target="uc-admin-film" edge="1">
@@ -73,31 +95,13 @@
         <mxCell id="rel-admin-dash" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-admin" target="uc-admin-dash" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="rel-bank-checkout" style="endArrow=none;html=1;rounded=0;" parent="1" source="actor-bank" target="uc-checkout" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="rel-include-seat" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Include&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=bottom;" parent="1" source="uc-book" target="uc-seat" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="rel-include-checkout" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Include&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=bottom;" parent="1" source="uc-book" target="uc-checkout" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-extend-book" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Extend&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;" parent="1" source="uc-book" target="uc-login" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-extend-film" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Extend&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;" parent="1" source="uc-admin-film" target="uc-login" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-extend-room" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Extend&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;" parent="1" source="uc-admin-room" target="uc-login" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-extend-show" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Extend&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;" parent="1" source="uc-admin-show" target="uc-login" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-extend-order" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Extend&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;" parent="1" source="uc-admin-order" target="uc-login" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-extend-dash" value="&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;Extend&amp;gt;&amp;gt;&lt;/font&gt;" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;align=left;verticalAlign=top;" parent="1" source="uc-admin-dash" target="uc-login" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="rel-general-admin" style="endArrow=block;endFill=0;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="actor-admin" target="actor-user" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>

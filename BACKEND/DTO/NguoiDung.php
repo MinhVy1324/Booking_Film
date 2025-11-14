@@ -10,6 +10,9 @@ class NguoiDung {
     private $Email;
     private $MatKhau; // Sẽ là mật khẩu đã được hash
     private $LoaiNguoiDung;
+    private $SoDienThoai;
+    private $NgaySinh;
+
 
     // 2. Phương thức (Methods): Getters và Setters
     // Dùng để truy cập và gán giá trị cho thuộc tính private
@@ -45,8 +48,25 @@ class NguoiDung {
     public function getLoaiNguoiDung() {
         return $this->LoaiNguoiDung;
     }
+
     public function setLoaiNguoiDung($loai) {
         $this->LoaiNguoiDung = $loai;
+    }
+
+    public function getSoDienThoai() {
+        return $this->SoDienThoai;
+    }
+
+    public function setSoDienThoai($sdt) {
+        $this->SoDienThoai = $sdt;
+    }
+
+    public function getNgaySinh() {
+        return $this->NgaySinh;
+    }
+
+    public function setNgaySinh($NgaySinh) {
+        $this->NgaySinh = $NgaySinh;
     }
 }
 ?>

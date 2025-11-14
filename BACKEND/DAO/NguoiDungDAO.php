@@ -106,5 +106,89 @@ class NguoiDungDAO {
         $this->db->close();
         return $thanhCong;
     }
+
+    public function getNguoiDungById($id) {
+        // Tạo lại kết nối
+        $this->db = (new Database())->getConnection();
+        
+        $sql = "SELECT Id, HoTen, Email, SoDienThoai, NgaySinh FROM nguoidung WHERE Id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            
+            // Tạo đối tượng Model NguoiDung
+            $user = new NguoiDung();
+            $user->setId($row['Id']);
+            $user->setHoTen($row['HoTen']);
+            $user->setEmail($row['Email']);
+            $user->setSoDienThoai($row['SoDienThoai']);
+            $user->setNgaySinh($row['NgaySinh']);
+            
+
+            $stmt->close();
+            $this->db->close();
+            return $user;
+        }
+        
+        $stmt->close();
+        $this->db->close();
+        return null; // Không tìm thấy
+    }
+
+    
+    public function updateThongTinCaNhan(NguoiDung $user) {
+        $this->db = (new Database())->getConnection();
+        
+        $sql = "UPDATE nguoidung SET HoTen = ?, SoDienThoai = ?, NgaySinh = ? WHERE Id = ?";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $hoTen = $user->getHoTen();
+        $sdt = $user->getSoDienThoai();
+        $ngaySinh = $user->getNgaySinh();
+        $id = $user->getId();
+
+        $stmt->bind_param("sssi", $hoTen, $sdt, $ngaySinh, $id);
+        
+        $success = $stmt->execute();
+        $stmt->close();
+        $this->db->close();
+        return $success;
+    }
+
+    public function getMatKhauById($id) {
+        $this->db = (new Database())->getConnection();
+        $sql = "SELECT MatKhau FROM nguoidung WHERE Id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $stmt->close();
+            $this->db->close();
+            return $row['MatKhau'];
+        }
+        $stmt->close();
+        $this->db->close();
+        return null;
+    }
+
+    public function updateMatKhau($id, $matKhauMoiDaHash) {
+        $this->db = (new Database())->getConnection();
+        $sql = "UPDATE nguoidung SET MatKhau = ? WHERE Id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("si", $matKhauMoiDaHash, $id);
+        
+        $success = $stmt->execute();
+        $stmt->close();
+        $this->db->close();
+        return $success;
+    }
 }
 ?>

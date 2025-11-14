@@ -74,5 +74,76 @@ class DonDatVeDAO {
             return false; // Thất bại
         }
     }
+
+    public function getDonHangByUserId($userId) {
+        $this->db = (new Database())->getConnection();
+        
+        $sql = "SELECT 
+                    ddv.Id, 
+                    p.TenPhim, 
+                    r.TenRap,
+                    sc.NgayChieu, 
+                    sc.GioBatDau, 
+                    ddv.TongTien, 
+                    ddv.TrangThai
+                FROM dondatve ddv
+                LEFT JOIN suatchieu sc ON ddv.IdSuatChieu = sc.Id
+                LEFT JOIN phim p ON sc.IdPhim = p.Id
+                LEFT JOIN phongchieu pc ON sc.IdPhongChieu = pc.Id
+                LEFT JOIN rap r ON pc.IdRap = r.Id
+                WHERE ddv.IdNguoiDung = ?
+                ORDER BY ddv.NgayDat DESC";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        $orderList = [];
+        
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $orderList[] = $row;
+            }
+        }
+        
+        $stmt->close();
+        $this->db->close();
+        return $orderList;
+    }
+
+    public function getDonHangDetailsById($orderId, $userId) {
+        $this->db = (new Database())->getConnection();
+        
+        $sql = "SELECT 
+                    ddv.Id, ddv.NgayDat, ddv.TongTien, ddv.TrangThai,
+                    p.TenPhim, p.PosterUrl, p.ThoiLuong,
+                    r.TenRap, r.DiaChi,
+                    pc.TenPhong,
+                    sc.NgayChieu, sc.GioBatDau
+                FROM dondatve ddv
+                LEFT JOIN suatchieu sc ON ddv.IdSuatChieu = sc.Id
+                LEFT JOIN phim p ON sc.IdPhim = p.Id
+                LEFT JOIN phongchieu pc ON sc.IdPhongChieu = pc.Id
+                LEFT JOIN rap r ON pc.IdRap = r.Id
+                WHERE ddv.Id = ? AND ddv.IdNguoiDung = ?";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("ii", $orderId, $userId);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $stmt->close();
+            $this->db->close();
+            return $row; // Trả về mảng thông tin
+        }
+        
+        $stmt->close();
+        $this->db->close();
+        return null; // Không tìm thấy hoặc không đúng chủ sở hữu
+    }
 }
 ?>

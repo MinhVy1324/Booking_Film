@@ -184,38 +184,67 @@ class PhimDAO {
         return null; // Không tìm thấy phim
     }
 
-    public function getPhimSapChieuNoiBat() {
-        // (Tạo lại kết nối)
+    // public function getPhimSapChieuNoiBat() {
+    //     // (Tạo lại kết nối)
+    //     $this->db = (new Database())->getConnection();
+        
+    //     // Lấy phim có ngày khởi chiếu trong tương lai VÀ gần nhất
+    //     $sql = "SELECT * FROM phim 
+    //             WHERE NgayKhoiChieu > CURDATE() 
+    //             ORDER BY NgayKhoiChieu ASC 
+    //             LIMIT 1";
+        
+    //     $result = $this->db->query($sql);
+
+    //     if ($result && $result->num_rows == 1) {
+    //         $row = $result->fetch_assoc();
+            
+    //         // Tạo đối tượng DTO (Model)
+    //         $phim = new Phim();
+    //         $phim->setId($row['Id']);
+    //         $phim->setTenPhim($row['TenPhim']);
+    //         $phim->setMoTa($row['MoTa']);
+    //         $phim->setTheLoai($row['TheLoai']);
+    //         $phim->setThoiLuong($row['ThoiLuong']);
+    //         $phim->setNgayKhoiChieu($row['NgayKhoiChieu']);
+    //         $phim->setPosterUrl($row['PosterUrl']);
+    //         $phim->setXepHang($row['XepHang']);
+
+    //         $this->db->close();
+    //         return $phim;
+    //     }
+        
+    //     $this->db->close();
+    //     return null; // Không tìm thấy phim nào sắp chiếu
+    // }
+
+    public function getPhimChoBanner() {
         $this->db = (new Database())->getConnection();
         
-        // Lấy phim có ngày khởi chiếu trong tương lai VÀ gần nhất
+        // Lấy 4 phim mới nhất
         $sql = "SELECT * FROM phim 
-                WHERE NgayKhoiChieu > CURDATE() 
-                ORDER BY NgayKhoiChieu ASC 
-                LIMIT 1";
+                ORDER BY NgayKhoiChieu DESC 
+                LIMIT 4";
         
         $result = $this->db->query($sql);
+        $phimList = [];
 
-        if ($result && $result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            
-            // Tạo đối tượng DTO (Model)
-            $phim = new Phim();
-            $phim->setId($row['Id']);
-            $phim->setTenPhim($row['TenPhim']);
-            $phim->setMoTa($row['MoTa']);
-            $phim->setTheLoai($row['TheLoai']);
-            $phim->setThoiLuong($row['ThoiLuong']);
-            $phim->setNgayKhoiChieu($row['NgayKhoiChieu']);
-            $phim->setPosterUrl($row['PosterUrl']);
-            $phim->setXepHang($row['XepHang']);
-
-            $this->db->close();
-            return $phim;
+        if ($result && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $phim = new Phim();
+                $phim->setId($row['Id']);
+                $phim->setTenPhim($row['TenPhim']);
+                $phim->setMoTa($row['MoTa']);
+                $phim->setTheLoai($row['TheLoai']);
+                $phim->setPosterUrl($row['PosterUrl']);
+                // (Thêm các hàm set khác nếu bạn cần)
+                
+                $phimList[] = $phim;
+            }
         }
         
         $this->db->close();
-        return null; // Không tìm thấy phim nào sắp chiếu
+        return $phimList;
     }
 }
 ?>

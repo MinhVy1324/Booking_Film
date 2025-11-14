@@ -1,50 +1,78 @@
 <?php
 // File: index.php
 
-// 1. Nạp Header
-include 'TEMPLATES/header.php'; // Khớp với tên thư mục của bạn
-
-// 2. Nạp các file Lớp (Class) cần thiết
-// (Dùng __DIR__ để có đường dẫn tuyệt đối, an toàn hơn)
-// (Khớp với tên thư mục BACKEND và DAO viết hoa của bạn)
+// 1. NẠP HEADER VÀ DAO
+include 'TEMPLATES/header.php'; 
 include_once __DIR__ . '/BACKEND/DAO/PhimDAO.php'; 
 
-// 3. TẠO ĐỐI TƯỢNG DAO
+// 2. TẠO ĐỐI TƯỢNG DAO
 $phimDAO = new PhimDAO();
 
-// 4. GỌI DAO ĐỂ LẤY DỮ LIỆU (Thay vì tự viết SQL)
-$list_dang_chieu = $phimDAO->getPhimDangChieu();
-// Tạo đối tượng DAO mới vì hàm trước đã đóng kết nối
+// 3. LẤY DỮ LIỆU
+// (Lấy 4 phim cho Banner)
+$list_phim_banner = $phimDAO->getPhimChoBanner();
+// (Lấy phim cho 2 tab Đang chiếu / Sắp chiếu)
+$list_dang_chieu = (new PhimDAO())->getPhimDangChieu();
 $list_sap_chieu = (new PhimDAO())->getPhimSapChieu(); 
-
-$phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
-
 ?>
 
 <title>Trang Chủ - Đặt Vé Xem Phim</title>
 
 <style>
-    /* ... (Toàn bộ CSS của trang index.php cũ) ... */
-    
-    /* (Đảm bảo bạn có CSS cho .container) */
-    .container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
+    .carousel-container {
+        width: 100%;
+        height: 500px; /* Chiều cao của banner */
+        position: relative;
+        overflow: hidden;
     }
-    .hero-banner {
-        height: 500px;
-        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1500x500.png?text=Phim+Bom+Tan') center center/cover;
+
+    .carousel-slides {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
     }
-    .hero-banner h1 { font-size: 3rem; margin-bottom: 10px; }
-    .hero-banner p { font-size: 1.2rem; margin-bottom: 20px; }
-    .hero-banner .btn-primary {
+
+    .slide {
+        min-width: 100%;
+        height: 100%;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    /* Lớp phủ mờ */
+    .slide::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6));
+    }
+
+    .slide-content {
+        position: absolute;
+        z-index: 2;
+        color: white;
+        
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 90%;
+        max-width: 800px;
+        text-align: center;
+    }
+    
+    .slide-content h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+    
+    .slide-content p {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+    
+    .slide-content .btn-primary {
         background-color: #e50914;
         color: white;
         padding: 12px 25px;
@@ -53,7 +81,52 @@ $phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
         border-radius: 5px;
         transition: background-color 0.3s;
     }
-    .hero-banner .btn-primary:hover { background-color: #c40812; }
+    .slide-content .btn-primary:hover { background-color: #c40812; }
+
+    /* Nút Next & Prev */
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+        transition: 0.3s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        z-index: 3;
+    }
+    .next { right: 0; border-radius: 3px 0 0 3px; }
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+    
+    /* Dấu chấm (Dots) */
+    .dots-container {
+        text-align: center;
+        padding: 10px;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        z-index: 3;
+    }
+    .dot {
+        cursor: pointer;
+        height: 12px;
+        width: 12px;
+        margin: 0 5px;
+        background-color: #555;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+    .dot.active, .dot:hover {
+        background-color: #e50914;
+    }
+
     .movie-section { padding: 40px 0; }
     .movie-tabs { margin-bottom: 30px; border-bottom: 1px solid #333; }
     .tab-btn {
@@ -74,7 +147,7 @@ $phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
         overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         transition: transform 0.3s, box-shadow 0.3s;
     }
-    .movie-card:hover { transform: translateY(-10px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7); }
+    .movie-card:hover { transform: translateY(-10px); }
     .movie-card img.poster { width: 100%; height: 300px; object-fit: cover; }
     .movie-card .movie-info { padding: 15px; }
     .movie-card h3 {
@@ -92,49 +165,50 @@ $phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
         transition: background-color 0.3s;
     }
     .movie-card .btn-buy:hover { background-color: #c40812; }
+
+    .movie-card-link {
+        text-decoration: none;
+        color: inherit; /* Kế thừa màu chữ (màu trắng) */
+    }
+
+    .movie-card .btn-buy {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #e50914;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
 </style>
 
-<?php 
-    // 1. (Đoạn code này giả định rằng biến $phim_banner 
-    //    đã được lấy từ PhimDAO->getPhimSapChieuNoiBat() ở đầu file index.php)
+<section class="carousel-container">
+    <div class="carousel-slides">
+        <?php foreach ($list_phim_banner as $phim): ?>
+            <a href="USER/movie-details.php?id=<?php echo $phim->getId(); ?>" 
+               class="slide" 
+               style="background-image: url('<?php echo htmlspecialchars($phim->getPosterUrl()); ?>');">
+                
+                <div class="slide-content">
+                    <h1><?php echo htmlspecialchars($phim->getTenPhim()); ?></h1>
+                    <p><?php echo htmlspecialchars($phim->getTheLoai()); ?></p>
+                    </div>
+            </a>
+        <?php endforeach; ?>
+    </div>
 
-    // 2. Chuẩn bị style cho banner
-    $banner_style = ""; // Mặc định là không có ảnh nền (chỉ màu đen)
-    
-    if ($phim_banner) {
-        // Nếu có phim, tạo style inline
-        
-        // Lấy đường dẫn an toàn từ CSDL (ví dụ: 'IMAGES/QVSD.jpg')
-        $posterUrl = htmlspecialchars($phim_banner->getPosterUrl());
-        
-        // Tạo ra chuỗi style
-        // Đường dẫn '$posterUrl' là đường dẫn tương đối từ file index.php
-        $banner_style = "style=\"background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('" . $posterUrl . "') center center/cover;\"";
-    }
-?>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-<section class="hero-banner">
-    <?php if ($phim_banner): // Kiểm tra xem có phim sắp chiếu không ?>
-        
-        <h1><?php echo htmlspecialchars($phim_banner->getTenPhim()); ?></h1>
-        
-        <p>
-            <?php echo htmlspecialchars($phim_banner->getTheLoai()); ?> - 
-            Sắp ra mắt ngày <?php echo date('d/m/Y', strtotime($phim_banner->getNgayKhoiChieu())); ?>
-        </p>
-        
-        <a href="USER/movie-details.php?id=<?php echo $phim_banner->getId(); ?>" class="btn-primary" 
-           style="background-color: #555; cursor: pointer; border-color: #555;">
-           XEM CHI TIẾT
-        </a>
-
-    <?php else: // Nếu CSDL không có phim nào sắp chiếu ?>
-        
-        <h1>Chào mừng đến với LOGO-PHIM</h1>
-        <p>Hiện chưa có phim nào sắp chiếu nổi bật.</p>
-        
-    <?php endif; ?>
+    <div class="dots-container">
+        <?php for ($i = 0; $i < count($list_phim_banner); $i++): ?>
+            <span class="dot" onclick="currentSlide(<?php echo $i + 1; ?>)"></span>
+        <?php endfor; ?>
+    </div>
 </section>
+
 
 <main class="movie-section container">
     <div class="movie-tabs">
@@ -143,42 +217,44 @@ $phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
     </div>
 
     <div class="movie-grid" id="grid-dang-chieu">
-        
         <?php
-        // 5. LẶP QUA MẢNG ĐỐI TƯỢNG (ĐÚNG CHUẨN OOP)
         if (count($list_dang_chieu) > 0) {
-            foreach($list_dang_chieu as $phim) { // $phim là một ĐỐI TƯỢNG
-                echo '<div class="movie-card">';
-                // 6. GỌI PHƯƠNG THỨC GETTER
+            foreach($list_dang_chieu as $phim) {
+                // 1. Bọc toàn bộ thẻ card trong 1 thẻ <a>
+                echo '<a href="USER/movie-details.php?id=' . $phim->getId() . '" class="movie-card-link">';
+                echo '  <div class="movie-card">';
                 echo '    <img class="poster" src="' . htmlspecialchars($phim->getPosterUrl()) . '" alt="Poster Phim">';
                 echo '    <div class="movie-info">';
                 echo '        <h3>' . htmlspecialchars($phim->getTenPhim()) . '</h3>';
                 echo '        <p>' . htmlspecialchars($phim->getTheLoai()) . ' | ' . $phim->getThoiLuong() . ' phút</p>';
-                // Dẫn vào thư mục USER/
-                echo '        <a href="USER/movie-details.php?id=' . $phim->getId() . '" class="btn-buy">MUA VÉ</a>';
+                // 2. Biến nút Mua Vé thành 1 thẻ <span> để giữ CSS
+                echo '        <span class="btn-buy">MUA VÉ</span>';
                 echo '    </div>';
-                echo '</div>';
+                echo '  </div>';
+                echo '</a>'; // 3. Đóng thẻ <a>
             }
         } else {
             echo "<p>Chưa có phim đang chiếu.</p>";
         }
         ?>
-
     </div>
     
     <div class="movie-grid hidden" id="grid-sap-chieu">
-        <?php
-        // Tương tự cho phim sắp chiếu
+         <?php
         if (count($list_sap_chieu) > 0) {
             foreach($list_sap_chieu as $phim) {
-                echo '<div class="movie-card">';
+                // 1. Bọc toàn bộ thẻ card trong 1 thẻ <a>
+                echo '<a href="USER/movie-details.php?id=' . $phim->getId() . '" class="movie-card-link">';
+                echo '  <div class="movie-card">';
                 echo '    <img class="poster" src="' . htmlspecialchars($phim->getPosterUrl()) . '" alt="Poster Phim">';
                 echo '    <div class="movie-info">';
                 echo '        <h3>' . htmlspecialchars($phim->getTenPhim()) . '</h3>';
                 echo '        <p>' . htmlspecialchars($phim->getTheLoai()) . ' | ' . $phim->getThoiLuong() . ' phút</p>';
-                echo '        <a href="#" class="btn-buy" style="background-color: #555; cursor: not-allowed;">CHƯA MỞ BÁN</a>';
+                // 2. Biến nút thành <span> (và đổi chữ)
+                echo '        <span class="btn-buy" style="background-color: #555;">XEM CHI TIẾT</span>';
                 echo '    </div>';
-                echo '</div>';
+                echo '  </div>';
+                echo '</a>'; // 3. Đóng thẻ <a>
             }
         } else {
             echo "<p>Chưa có phim sắp chiếu.</p>";
@@ -188,6 +264,54 @@ $phim_banner = (new PhimDAO())->getPhimSapChieuNoiBat();
 </main>
 
 <script>
+    let slideIndex = 0;
+    let autoSlideTimer;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+    const slideContainer = document.querySelector(".carousel-slides");
+    const totalSlides = slides.length;
+
+    function showSlides() {
+        if (totalSlides === 0) return; // Không chạy nếu không có slide
+
+        // Ẩn tất cả slide
+        slideContainer.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+        // Đặt active cho dot
+        dots.forEach(dot => dot.classList.remove("active"));
+        dots[slideIndex].classList.add("active");
+
+        // Tự động trượt
+        clearTimeout(autoSlideTimer);
+        autoSlideTimer = setTimeout(() => {
+            plusSlides(1); // Tự động chuyển slide tiếp theo
+        }, 5000); // 5 giây
+    }
+
+    // Nút Next/Prev
+    function plusSlides(n) {
+        slideIndex += n;
+        if (slideIndex >= totalSlides) {
+            slideIndex = 0; // Quay về slide đầu
+        }
+        if (slideIndex < 0) {
+            slideIndex = totalSlides - 1; // Về slide cuối
+        }
+        showSlides();
+    }
+
+    // Nút Dots
+    function currentSlide(n) {
+        slideIndex = n - 1;
+        showSlides();
+    }
+
+    // Khởi chạy slide đầu tiên
+    if (totalSlides > 0) {
+        dots[0].classList.add("active");
+        showSlides();
+    }
+
     const tabButtons = document.querySelectorAll('.tab-btn');
     const movieGrids = document.querySelectorAll('.movie-grid');
 
